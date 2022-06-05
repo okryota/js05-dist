@@ -1,0 +1,111 @@
+body{
+    background-color: rgb(140, 201, 237);    
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    width: auto;
+    animation: change 60s infinite ease-in-out;
+}
+
+.container{
+    position: absolute;
+    height: 35pc;
+    width: 25pc;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: 0 0 50px;
+}
+#uname {
+    position: absolute;
+    background-color: #fff;
+    height: 50px;
+    width: 70.5%;
+    margin: auto;
+    //top: 15px;
+    right: 0;
+    left: 0;
+    bottom: 120px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding-left: 24px;
+    font-size: 15px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#text {
+    position: absolute;
+    background-color: #fff;
+    height: 80px;
+    width: 70%;
+    margin: auto;
+    right: 0;
+    left: 0;
+    bottom: 25px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 28px;
+    font-size: 15px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#output {
+    position: absolute;
+    background-color: #fff;
+    overflow: auto;
+    height: 73%;
+    width: 71.5%;
+    margin: auto;
+    top: 0px;
+    left: 0;
+    right: 0;
+    bottom: 115px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding-left: 10px;
+    word-wrap: break-word;
+    font-size: 15px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#refresh {
+    position: absolute;
+    background: transparent;
+    margin: auto;
+    bottom: 125px;
+    right: 55px;
+    border: none;
+    cursor: pointer;
+}
+
+#send {
+    position: absolute;
+    background: transparent;
+    border: none;
+    margin: auto;
+    bottom: 20px;
+    right: 55px;
+    cursor: pointer;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+}
+
+#sakujo {
+    background-color: rgb(140, 201, 237); 
+}
+header {
+    display: block;
+    text-align: center;
+    color: #ffffff;
+}

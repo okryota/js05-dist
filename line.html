@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sample</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <input type="hidden" id="nameIn" value="guest">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <input type="text" id="msgIn" class="form-control" placeholder="メッセージを入れてくださいな" value="" required="required" pattern="" title="">
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div id="msgDiv"></div>
+            <br class="clear_balloon" />
+            <div id="bottomDiv"></div>
+        </div>
+
+    </main>
+    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+<script>
+//config内の値は自分のプロジェクトの設定に合わせて指定
+var config = {
+    apiKey: "<API_KEY>",
+    authDomain: "<PROJECT_ID>.firebaseapp.com",
+    databaseURL: "https://<DATABASE_NAME>.firebaseio.com",
+    storageBucket: "<BUCKET>.appspot.com",
+};
+
+firebase.initializeApp(config);
+
+var rootRef = firebase.database().ref();
+
+$('#msgIn').keypress(function (e) {
+    if (e.keyCode == 13) {
+        var name = $('#nameIn').val();
+        var text = $('#msgIn').val();
+        rootRef.push({ name: name, text: text });
+        $('#msgIn').val('');
+    }
+});
+
+rootRef.on('child_added', function (ss) {
+    var msg = ss.val();
+    dspChatMsg(msg.name, msg.text);
+});
+
+function dspChatMsg(name, text) {
+    $('<div class="right_balloon"/>').text(text).appendTo($('#msgDiv'));
+    $("html,body").animate({ scrollTop: $('#bottomDiv').offset().top }, 0);
+};
+
+</script>
+
+</body>

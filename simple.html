@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Chatアプリ</title>
+<link rel="stylesheet" href="css/simple.css">
+<h1> LINEアプリ </h1>
+</head>
+<body>
+
+<!-- コンテンツ表示画面 -->
+<div>
+    <input type="text" id="uname" placeholder="名前">
+
+</div>
+<div>
+    <textarea name="" id="text" placeholder="   本文" cols="50" rows="8"></textarea>
+
+    <button id="send">送信する</button>
+</div>
+
+<div id="output"></div>
+
+<!--/ コンテンツ表示画面 -->
+
+
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- JQuery -->
+
+
+<!--** 以下Firebase **-->
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }
+        from "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.8.2/firebase-database.min.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "**",//apikeyは消す
+      authDomain: "fir-demo-bb6cc.firebaseapp.com",
+      projectId: "fir-demo-bb6cc",
+      storageBucket: "fir-demo-bb6cc.appspot.com",
+      messagingSenderId: "683588897331",
+      appId: "1:683588897331:web:5c2b7417f96eab9ed9f146"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    const db = getDatabase(app); //RealtimeDBに接続
+    const dbRef = ref(db, 'chat'); //RealtimeDBの"chat”を使う
+
+    $('#send').on('click', function() {
+        const msg ={
+            uname: $('#uname').val(),
+            text: $('#text').val()
+            //<img src="imgs/buke.png" alt="buke" title="buke">
+        }
+        const newPostRef = push(dbRef);
+        set(newPostRef, msg);
+    });
+
+    onChildAdded(dbRef, function(date){
+        const msg = date.val();
+        const key = date.key;
+
+        //投稿のゴミ箱ボタンのidをFirebaseのユニークIDにする
+        const h = `<div class="tweet"><p>${msg.uname}: ${msg.text}<input id="${key}" class="sakujo" type="button" value="✕"></p></div>`;
+        const c = ` <img src="./imgs/buke.png" alt="" height="44px" width="50px">`
+        console.log(h)
+        $('#output').append(h);
+        $(".icon").append(c);
+    });
+
+    $("#output").on("click",".sakujo", function(){
+        const thisKey = $(this).attr("id");
+        const dltKey = "chat/"+thisKey;
+        let res = confirm("削除しますか？");
+        if(res == true){
+            remove(ref(db, dltKey));
+        }
+        else{
+            return false;
+        }
+    });
+
+    onChildRemoved(dbRef, function(data){
+        const key = '#' + data.key;
+        $(key).parent().remove();
+    });
+
+    $("#btn-add").on('click', function() {
+        //const findElm = $(this).next(".box"); //アコーディオンを行うエリアを取得
+        $(".box").slideToggle();       //アコーディオンの上下動作
+        
+        if($(this).hasClass('close')){ //タイトル要素にクラス名closeがあれば
+        $(this).removeClass('close');  //クラス名を除去し
+        }
+        else{                          //それ以外は
+        $(this).addClass('close');     //クラス名closeを付与
+        }
+    });
+
+    $('#text').on('keydown', function(e){
+        console.log(e.key);
+        if(e.keyCode === 13) {
+            const msg = {
+                uname: $('#uname').val(),
+                text: $('#text').val()
+            }
+            const newPostRef = push(dbRef);
+            set(newPostRef, msg);
+        }
+    });
+
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
